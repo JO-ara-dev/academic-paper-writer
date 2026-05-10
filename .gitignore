@@ -25,3 +25,13 @@ venv/
 *.tmp
 *.bak
 ~$*
+
+# Firecrawl cache
+.firecrawl/
+
+# Sensitive files
+*.env
+.env.*
+config.json
+credentials.json
+secrets.json
