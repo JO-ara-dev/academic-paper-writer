@@ -1,8 +1,24 @@
 # 学术论文写作助手 (Academic Paper Writer)
 
+> **支持多个AI平台**：Claude Code、Trae IDE、ChatGPT、文心一言等
+
 ## 简介
 
 这是一个专为学生设计的学术论文写作助手Skill，帮助完成课程论文、调研报告等学术写作任务。基于实际课程论文完成经验总结，采用**任务拆解**和**文献驱动**的方法，提供从内容撰写到格式排版的全流程解决方案。
+
+## 版本选择
+
+本项目提供两个版本，适用于不同的AI平台：
+
+| 版本 | 适用平台 | 说明 |
+|------|----------|------|
+| **Claude Code版本**（根目录） | Claude Code | 完整功能，支持Agent模式 |
+| **Trae版本**（trae-version/） | Trae IDE | 适配Trae规范，包含Rules配置 |
+
+**快速选择**：
+- 使用 **Claude Code** → 下载根目录的文件
+- 使用 **Trae IDE** → 下载 `trae-version/` 文件夹
+- 使用 **其他AI平台** → 参考 `网页AI提示词模板.md`
 
 ## 核心理念
 
@@ -37,48 +53,98 @@
 
 ```
 academic-paper-writer/
-├── SKILL.md                    # Skill定义文件（核心）
+├── SKILL.md                    # Skill定义文件（Claude Code版本）
 ├── README.md                   # 本说明文档
 ├── 使用指南.md                 # 详细使用指南
-├── 网页AI提示词模板.md         # 通用提示词模板
-├── templates/
-│   ├── 文献笔记模板.md         # 文献笔记模板
-│   ├── 文献清单模板.md         # 文献清单模板
-│   ├── 任务清单模板.md         # 任务清单模板
-│   └── 论文大纲模板.md         # 论文大纲模板
-└── examples/
-    ├── 文献笔记示例.md         # 文献笔记示例
-    ├── 任务清单示例.md         # 任务清单示例
-    └── 论文正文示例.md         # 论文正文示例
+├── 网页AI提示词模板.md         # 通用提示词模板（适用于任何AI平台）
+├── templates/                  # 模板文件
+├── examples/                   # 示例文件
+└── trae-version/               # Trae IDE版本
+    ├── SKILL.md                # Skill定义文件（Trae规范）
+    ├── Trae使用说明.md         # Trae专用使用说明
+    ├── templates/              # 模板文件
+    ├── examples/               # 示例文件
+    └── .trae/
+        └── rules/              # Rules配置文件
+            └── academic-paper-constraints.md
 ```
 
 ## 快速开始
 
-### 1. 安装依赖
+### 方式一：Claude Code版本
+
+#### 1. 安装依赖
 
 ```bash
 pip install pdf2docx python-docx pypdf docx2pdf
 ```
 
-### 2. 使用方式
-
-#### 方式一：作为Claude Code Skill使用
+#### 2. 安装Skill
 
 将整个文件夹复制到Claude Code的skills目录：
 ```bash
 cp -r academic-paper-writer ~/.claude/skills/
 ```
 
-然后在对话中调用：
+#### 3. 使用
+
+在对话中调用：
 ```
 /help academic-paper-writer
 ```
 
-#### 方式二：使用提示词模板
+或者直接描述需求：
+```
+帮我写一篇关于数字孪生在智能制造中应用的课程论文
+```
 
-参考 `网页AI提示词模板.md` 中的提示词，在任何AI对话中使用。
+### 方式二：Trae IDE版本
 
-#### 方式三：参考使用指南
+#### 1. 安装Skill
+
+**方法A：复制到项目目录（推荐）**
+```
+1. 打开Trae，打开你的论文项目
+2. 将 trae-version 文件夹复制到 .trae/skills/ 目录
+3. 重命名为 academic-paper-writer
+4. 最终路径：项目/.trae/skills/academic-paper-writer/
+```
+
+**方法B：复制到全局目录**
+```
+1. 找到全局skill目录
+   - Windows: %userprofile%\.trae\skills\
+   - macOS/Linux: ~/.trae/skills/
+2. 将 trae-version 文件夹复制到全局目录
+3. 重命名为 academic-paper-writer
+4. 重启Trae
+```
+
+#### 2. 配置Rules（可选但推荐）
+
+将 `.trae/rules/` 文件夹复制到项目根目录，Rules会自动加载，确保AI遵守约束。
+
+#### 3. 使用
+
+在Trae聊天中输入：
+```
+帮我写一篇课程论文
+```
+
+AI会自动识别并加载skill，按照约束执行。
+
+详细说明请参考：`trae-version/Trae使用说明.md`
+
+### 方式三：使用提示词模板（适用于任何AI平台）
+
+参考 `网页AI提示词模板.md` 中的提示词，在以下平台使用：
+- ChatGPT
+- 文心一言
+- 通义千问
+- 讯飞星火
+- 其他AI对话平台
+
+### 方式四：参考使用指南
 
 阅读 `使用指南.md` 了解详细操作步骤。
 
@@ -253,12 +319,19 @@ cp -r academic-paper-writer ~/.claude/skills/
 
 ## 更新日志
 
+### v3.0 (2026-05-10)
+- 添加Trae IDE版本支持
+- 添加版本选择说明
+- 更新文件结构
+- 添加Rules配置文件
+
 ### v2.0 (2026-05-10)
 - 重新设计核心理念
 - 添加任务拆解功能
 - 添加文献处理功能
 - 添加基于文献的文章构建功能
 - 更新模板和示例
+- 添加重要约束（每步确认）
 
 ### v1.0 (2026-05-10)
 - 初始版本发布
